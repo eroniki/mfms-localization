@@ -178,10 +178,10 @@ Email: tomonari@vt.edu
 \begin{abstract}
     This paper presents a multifrequency and multistage indoor robot localization system based on fingerprinting.
     The proposed system relies on a 900 MHz \gls{lora} along with 2.4 GHz \gls{wifi} and \gls{bt} networks.
-    By incorporating different \gls{rf} signal wave, within a \gls{gru} framework the spatial and temporal signal fingerprints are used for indoor localization purposes.
+    By incorporating different \gls{rf} signal wave within a \gls{gru} framework, \gls{rss} measurements are used for indoor localization purposes.
     % where a Deep Learning framework utilized to fully exploit the information from signal maps of various Access Points (AP) available in an environment.
     Similar to conventional systems relying on the fingerprinting technique, the system is consisted of two stages: data acquisition and learning (offline), and localization (online).
-    In offline stage, the signal maps for various AP's are constructed via \gls{rss} information and learned by a network consisted of \gls{gru}, whereas the online stage contains the proposed localization method based on an information fusion technique.
+    In offline stage, the signal maps for various AP's are constructed via \gls{rss} information and learned by a network consisted of \gls{gru}, whereas the online stage contains the proposed localization method.
     \textit{Add some result once get it}
 \end{abstract}
 
@@ -194,7 +194,7 @@ Email: tomonari@vt.edu
 % For peerreview papers, this IEEEtran command inserts a page break and
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
-
+\glsresetall
 \input{inc/intro.tex}
 \input{inc/fundamentals.tex}
 \input{inc/mfms.tex}
