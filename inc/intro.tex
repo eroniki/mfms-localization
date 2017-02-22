@@ -1,30 +1,30 @@
 \section{Introduction}
-  The radio waves ..
-  Since \gls{rf} has become ubiquitious, it started being utilized in different applications varying from customer tracking indoors to robot localization. % more varying examples would be good.
-  However it is available, the information can be extracted from is prone to (suffers from) being sparse and severely effected by infrasracture of environments where WiFi based systems are deployed.
-  Amongst all the applications that WiFi signal can be used, robot localization is a problem where it is required to have higher level of success in localization accuracy and shorter localization time.
-  \textit{The main contributions of this paper is that the proposed technique can handle sparse, noisy RSS measurements acquired from the off-the-shelf AP's under LoS and NLoS situations, while achieving comparable localization accuracy to thes state-of-the-art methods.}
-
-  The success of the systems relying on the WiFi signal, in general, suffers from the phenomenon called Multipath Effect in which the AP is not in the direct line of sight and the EM waves from the AP where the received signal is propagated through non-line-of-sight, i.e.~concrete and glass walls.
-  Although there is some effort to either model or estimate the Multipath Effect to componsate its effects on the systems~\cite{cai2015identification}, it is still an open problem in the field in order to achieve the same level of success under NLoS observations.
-  %One way to componsate the multipath effect is to find out the first the time epoch the signal is acquired; however, some of these operations require significant change in hardware so that  \# \#.
-  \textit{The proposed system can inherently handle multipath effect, since machine not only can reduce complexity of overall design of the system but also can capture deeper information from the radio maps.}
-  % \textit{More explanation regarding the multipath effect is needed here to emphasize that machine learning algorithms can inherently handle it.}
-
-  Another problem with the WiFi signal which makes it difficult to employ it as the main information source is that the signal acquired is not reliable.
-  Figure~\ref{fig-variance} shows the acquired RSS information acquired with stationary client from the AP's both line-of-sight and non-line-of-sight positions in time.
-  The figure clearly depicts that even for stationary clients, the RSSI readings greatly deviates from the mean in time.
-  % \#\textit{gotta mention that deviation makes it not reliable}.
-  To be able to extract relatively reliable information, some hardware and software changes proposed to incorporate Channel State Information (CSI) provided by Orthogonal Frequency-Division Multiplexing (OFDM) forming WiFi protocol.
-  As~\cite{gao2015channel} suggests/proves, the CSI information provides significantly reliable information.
-  However, to be able to acquire CSI information, a specific type of NIC should be used with a specific type of firmware.
-  This makes it hard to deploy proposed system on Embedded-devices, IoT's and robotic systems.\textit{, while the proposed system can be deployed to almost-any arbitrary system thanks to the simplicity of the design.}
-
-  % \textit{Nail the idea Machine Learning stuff can be deployed practically everywhere}
-
-  The paper is organized as follows.
-  The following section reviews the literature regarding robot localization with WiFi signal.
-  In Sec.~\ref{sec-PF}, we formalize the problem.
-  Section~\ref{sec-SD} thoroughly explains the proposed system.
-  The experimentation and the results are  in Sec.~\ref{sec-EX}.
-  We outline our observation and conclusions in the final section.
+  % The radio waves ..
+  % Since \gls{rf} has become ubiquitious, it started being utilized in different applications varying from customer tracking indoors to robot localization. % more varying examples would be good.
+  % However it is available, the information can be extracted from is prone to (suffers from) being sparse and severely effected by infrasracture of environments where WiFi based systems are deployed.
+  % Amongst all the applications that WiFi signal can be used, robot localization is a problem where it is required to have higher level of success in localization accuracy and shorter localization time.
+  % \textit{The main contributions of this paper is that the proposed technique can handle sparse, noisy RSS measurements acquired from the off-the-shelf AP's under LoS and NLoS situations, while achieving comparable localization accuracy to thes state-of-the-art methods.}
+  %
+  % The success of the systems relying on the WiFi signal, in general, suffers from the phenomenon called Multipath Effect in which the AP is not in the direct line of sight and the EM waves from the AP where the received signal is propagated through non-line-of-sight, i.e.~concrete and glass walls.
+  % Although there is some effort to either model or estimate the Multipath Effect to componsate its effects on the systems~\cite{cai2015identification}, it is still an open problem in the field in order to achieve the same level of success under NLoS observations.
+  % %One way to componsate the multipath effect is to find out the first the time epoch the signal is acquired; however, some of these operations require significant change in hardware so that  \# \#.
+  % \textit{The proposed system can inherently handle multipath effect, since machine not only can reduce complexity of overall design of the system but also can capture deeper information from the radio maps.}
+  % % \textit{More explanation regarding the multipath effect is needed here to emphasize that machine learning algorithms can inherently handle it.}
+  %
+  % Another problem with the WiFi signal which makes it difficult to employ it as the main information source is that the signal acquired is not reliable.
+  % Figure~\ref{fig-variance} shows the acquired RSS information acquired with stationary client from the AP's both line-of-sight and non-line-of-sight positions in time.
+  % The figure clearly depicts that even for stationary clients, the RSSI readings greatly deviates from the mean in time.
+  % % \#\textit{gotta mention that deviation makes it not reliable}.
+  % To be able to extract relatively reliable information, some hardware and software changes proposed to incorporate Channel State Information (CSI) provided by Orthogonal Frequency-Division Multiplexing (OFDM) forming WiFi protocol.
+  % As~\cite{gao2015channel} suggests/proves, the CSI information provides significantly reliable information.
+  % However, to be able to acquire CSI information, a specific type of NIC should be used with a specific type of firmware.
+  % This makes it hard to deploy proposed system on Embedded-devices, IoT's and robotic systems.\textit{, while the proposed system can be deployed to almost-any arbitrary system thanks to the simplicity of the design.}
+  %
+  % % \textit{Nail the idea Machine Learning stuff can be deployed practically everywhere}
+  %
+  % The paper is organized as follows.
+  % The following section reviews the literature regarding robot localization with WiFi signal.
+  % In Sec.~\ref{sec-PF}, we formalize the problem.
+  % Section~\ref{sec-SD} thoroughly explains the proposed system.
+  % The experimentation and the results are  in Sec.~\ref{sec-EX}.
+  % We outline our observation and conclusions in the final section.
