@@ -126,6 +126,7 @@
 % http://www.ctan.org/pkg/dblfloatfix
 
 \usepackage[acronym]{glossaries}
+\usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{amsfonts}
 \usepackage{mathtools}
@@ -140,6 +141,8 @@
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 \renewcommand{\citedash}{--}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 \makeglossaries
 \input{inc/glossaries.tex}

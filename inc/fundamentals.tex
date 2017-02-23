@@ -1,6 +1,6 @@
 \section{\label{sec-FU}Fundamentals of Radio Wave Propagation and Radiolocationing}
-    This section will cover the fundamentals of radiowave propagation and radiolocationing systems based on fingerprinting.
-    First the radio wave propagation will be formulated and existing methods for radiolocation systems will be covered.
+    This section will cover the fundamentals of radio wave propagation and radiolocationing systems based on fingerprinting.
+    First the radio wave propagation will be formulated and then the existing methods for radiolocation systems will be covered.
 
     % An ideal receiving antenna in an empty space with a gain $G_r$ and placed $d$ meters away from a transmistting antenna with a gain $G_t$ and output po
     % An ideal antenna in an empty space with a gain of $G_t$ and radiating power of $P_t$, induces power $P_r$ in an antenna which has a gain of $G_r$
@@ -11,16 +11,20 @@
             P_r(d) = \dfrac{P_t  G_t  G_r \lambda^2}{{\left(4 \pi d\right)}^2}
     \end{equation}
 
-    \noindent where $P_r(d)$ and $P_t$ denote received, and transmitted power in Watts, respectively.
-    $G_t$ and $G_r$ are uniteless gains of transmitter, and receiver antenna while $\lambda$ and $d$ denote wavelength and the seperation between two antennas in meters, respectively.
+    In \Cref{eq:friisWatts}, $P_r(d)$ and $P_t$ denote received, and transmitted power with $d$ meters separation between two antennas in Watts, respectively.
+    $G_t$, $G_r$, and $\lambda$ represent unitless gains of transmitter and receiver antennas, and the wavelength, respectively.
+    Since the received power is minuscule level, \Cref{eq:friisdBm} represents Friis' equation in dBm.
+
     \begin{equation}
+      \begin{split}
         \label{eq:friisdBm}
-        P^{+}_r(d) = P^{+}_t + 10 \log{G_t G_r} + 20 \log{\lambda} - 20 \log{d} - 20 \log{4 \pi}
+        P^{+}_r(d) &= P^{+}_t + 10 \log{G_t} + 10 \log{G_r} + \\
+        & 20 \log{\lambda} - 20 \log{d} - 20 \log{4 \pi}
+      \end{split}
     \end{equation}
-    Since the received power is miniscule level, \Cref{eq:friisdBm} represents Friis' equation in dBm level.
     $P^{+}_r(d)$ and $P^{+}_t$ represent received and transmitted powers decibel scale.
-    However, Friis' equation does not hold true for the distance $d = 0$ and $d<\lambda$.
-    Thus, received power generally denoted relative to a reference point $d_0$ with a prior corresponding received power.
+    However, neither \Cref{eq:friisWatts}, nor \Cref{eq:friisdBm} holds true for the distance $d = 0$ and $d<\lambda$.
+    Thus, received power generally is denoted relative to a reference point $d_0$ with a prior corresponding received power.
 
     \begin{equation}
         \label{eq:friisRef}
@@ -42,22 +46,38 @@
     \end{equation}
 
     \noindent where $n$ is the path loss exponent and varies depending on the environment.
-    Please note $n = 2$ for empty space.
+    Please note $n = 2$ for empty spaces where there is no reflectors, diffractors or scatterers available in the propagation path.
     As it can be seen in the \Cref{eq:log-distance}, the received power and separation distance has a log-linear relationship.
-    One example system proposed is EZ~\cite{chintalapudi2010indoor} which employs the log-distance model with a Genetic Algorithm based optimizer along with a \gls{pf} fusing location estimates with inertial measurements.
+    % \Cref{fig:log-distance} demonstrates the log-distance relationship between received power and the separation between two antennas in two different frequencies in \gls{uhf} radio band.
+    % This figure implies two fundamental problems in radiolocationing systems:
+    % The first problem is that as the carrier frequency increases path loss increases significantly, which limits the radio covarage and localization ability of the system in large environments.
+    % On the other hand, as the carrier frequency increases, the separation between two antennas, i.e. the anchor node and the target to be localized, can be identified with finer resolution.
+    % Therefore, the trade-off between radio coverage and localization resolution can be resolved by employing different frequencies in indoor localization systems by fusing the information acquired from the anchor nodes.
+    While the most visited solution in fingerprinting-based indoor radiolocationing system is to estimate $n$ by fitting a curve to collected fingerprints.
+    After acquiring $n$ is enough for solving for the radial distance $d$ from the anchor node, at least 4 anchor nodes are required to localize an agent in an environment.
+
+    Given the mean measurement $\overline{PL}(d)$, for a point in the environment and path loss exponent $n$ and mean measurement $\overline{PL}(d_0)$ at the reference point $d_0$, the approximated propagation function can be written as:
+
+    \begin{equation}
+      \label{eq:log-distance-d}
+      f_{\hat{d}} = d_0 10^{\left(\dfrac{\overline{PL}(d)-\overline{PL}(d_0)}{10 n} \right)}
+    \end{equation}
+
     \begin{figure}[thpb]
        \centering
-      %  \framebox{\parbox{3in}{We suggest that you use a text box to insert a graphic (which is ideally a 300 dpi TIFF or EPS file, with all fonts embedded) because, in an document, this method is somewhat more stable than directly inserting a picture.
-      %  }}
        \includegraphics[width=\linewidth]{figures/rss-vs-distance.jpg}
-       \caption{\label{fig:log-distance}RSSI readings of NLoS and LoS AP's acquired with a stationary agent}
+       \caption{\label{fig:log-distance}RSSI readings of NLoS and LoS APs acquired with a stationary agent}
     \end{figure}
 
-    \Cref{fig:log-distance} demonstrates the log-distance relationship between received power and the separation between two antennas in two different frequencies in \gls{uhf} radio band.
-    This figure implies two fundamental problems in radiolocationing systems:
-    The first problem is that as the carrier frequency increases path loss increases significantly, which limits the radio covarage and localization ability of the system in a large environments.
-    On the other hand, as the carrier frequency increases, the separation between two antennas, i.e. the anchor node and the target to be localized, can be identified in finer resolution.
-    Therefore, the trade-off between radio coverage and localization resolution can be resolved by employing different frequencies in indoor localization systems by fusing the information acquired from the anchor nodes.
+    However, in order to obtain $\hat{d}$, the path loss exponent $n$ should be estimated from the collected data.
+    Let $\mathbf{m} = \{m_i | i=1 \ldots n_{location} \}$ and $\mathbf{X} = \{ \mathbf{x}_i | i = 1 \ldots n_{location}\}$ be the fingerprints collected during surveying and corresponding locations, respectively.
+    The approximated propagation function for each anchor nodes can be written as $f_{\hat{d}}(\mathbf{x}, m_i, n): \mathbf{M} \mapsto \mathbf{X}$.
+
+    \begin{equation}
+      n^* = \argmin_n \{\norm{\mathbf{X}}_2 - f_{\hat{d}}(\mathbf{X}, \mathbf{m}, n)\}
+    \end{equation}
+
+
     % Indoor localization is an important problem in which an object of interest, i.e.\ a robot in our framework, suited with different sensors localizes itself in an indoor environment where there is no global positioning information is available.
     % \textit{The complexity of the problem significantly \# \textit{exponentially} increases as NLoS of reference AP's, presence of hard-constraints, in particular infrasractural elements such as walls and doors, noisy nature of the signals, and dynamic environments.}~\cite{liu2007survey}
     % \textit{As robotic systems find more applications in indoor areas where dynamic objects, such as other robots and humans, often coexist, it increasingly becomes important to safely and accurately localize the agent.} %where there is no reliable global positioning system is available.}
@@ -67,79 +87,7 @@
     % The indoor localization systems based WiFi signal can be mainly categorized undepngr two categories: fingerprinting and model-based methods~\cite{hossain2015survey}.
     % We'll, however, only cover the fingerprinting technique due to the increasing popularity of the technique.
 
-    \subsection{Indoor Localization Based on Fingerprinting}
-    This section of the paper will cover the existing fingerprinting-based indoor radiolocation systems.
-    Fingerprinting-based radiolocation systems had been surveyed many times~\cite{he2016wi, honkavirta2009comparative} with different scopes due to its popularity in both academia and the industry.
 
-    Horus~\cite{youssef2005horus} is one of the early methods relying on Bayes' theorem and spatial clustering.
-    While Horus achieves a significant improvement in localization accuracy, the computational complexity
-
-    Zee~\cite{rai2012zee}: off-the-shelf hw, crowdsourcing
-    Many of the previous systems employ spatial pattern of the fingerprints, while others use temporal pattern displayed by anchor nodes.
-    %
-    % UnLoc~\cite{wang2012no}: zero supervising, no training; heavily depends on landmark extraction and dead reckoning. (mobile device)
-    % One of the recent advances is that to incorporate the hard-constraints induced by the environment infrasracture.
-    UnLoc~\cite{wang2012no} is an examplary instance falling into the former category.
-    The system aims for incorporating hard-constraints of the environment, namely, elevators, stairs, entrances, and the change in the fingerprint patterns; for instance, a significant drop of signal level of a specific anchor node in a specific region.
-
-
-    Particle filter~\cite{biswas2010wifi}: PF, dead reckoning
-
-    Zee~\cite{rai2012zee}: off-the-shelf hw, crowdsourcing
-    RADAR~\cite{radar}: One of the earliest
-    While Bayesian framework was used to present the belief of the robot pose and construct signal map in the previous works, LiFS~\cite{yang2012locating} approximated the environment by a grid-based method.
-    The grids are then transformed to \textit{stress-free floor plan} where the grids were clustered based on walking-distance among each other rather than physical distance; due to the fact that in indoor settings not every neighboring grids are accessible from one to another within one step.
-    The fingerprints are then collected during a walk in the localization environment, as the proposed data acquisition algorithm labels fingerprints with the number of steps taken.
-    The signal map were then constructed with the observed fingerprints with a Multidimensional scaling technique~\cite{borg2005modern}.
-    % The fingerprints are then clustered with the same multiscaling algorithm, after a tedious preprosessing step.
-    After acquiring fingerprint space and stress-free floor plan, the correspondence between two information was then calculated to map one to another; thus, spatial information was tied to fingerprints of the AP's.
-    This work achieved comparable localization results but depending on
-
-    ArrayTrack~\cite{xiong2013arraytrack}: One of the best
-
-
-    Walkie-Markie~\cite{shen2013walkie}: spatial-pattern
-
-
-    SpotFi~\cite{kotaru2015spotfi}: One of the best
-
-
-    %
-    % FP~\cite{he2016wi}: FP Survey
-    %
-    % Calibration-free~\cite{hossain2015survey}: Calibration-free survey
-    %
-    % General wireless~\cite{liu2007survey}: High number of citations
-
-    % \subsection{Indoor Localization with Machine Learning}
-    kNN:~\cite{liu2007survey}
-
-
-
-    Neural networks:~\cite{dayekh2010cooperative}
-
-
-    SVM:~\cite{wu2007location}
-
-
-    Deep-Fi~\cite{wang2016csi}: \gls{rbm}
-
-    % \begin{itemize}
-    %   \item{RSS Based}
-    %   \item{CSI Based}
-    %   \item{TDOA Based}
-    %   \item{RTT Based}
-    % \end{itemize}
-
-    In the scope of WiFi localization systems, it is still an open problem in the field of robotics to deal with this problem with off-the-shelf AP's, while resulting relatively higher localization results than other applications where NLoS observation can happen anytime.
-
-    \begin{figure}[thpb]
-       \centering
-      %  \framebox{\parbox{3in}{We suggest that you use a text box to insert a graphic (which is ideally a 300 dpi TIFF or EPS file, with all fonts embedded) because, in an document, this method is somewhat more stable than directly inserting a picture.
-      %  }}
-       \includegraphics[width=\linewitdh]{figures/rssi_variance.eps}
-       \caption{\label{fig:variance}RSSI readings of NLoS and LoS AP's acquired with a stationary agent}
-    \end{figure}
 
     % \begin{itemize}
     %   \item CSI-related special \\
