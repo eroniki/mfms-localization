@@ -1,81 +1,84 @@
-\section{\label{sec-FU}Fundamentals of Radio Wave Propagation and Radiolocationing}
-    This section will cover the fundamentals of radio wave propagation and radiolocationing systems based on fingerprinting.
-    First the radio wave propagation will be formulated and then the existing methods for radiolocation systems will be covered.
+\section{Fundamentals of Radio Wave Propagation in Radiolocationing and Function Approximation Methods}
+    \label{sec:fundamentals}
+    The first part of this section will first cover the fundamentals of radio wave propagation in regards to radiolocationing systems based on fingerprinting while the second part will present a brief description of function approximation methods with a emphasis on a stochastic function approximation method, i.e. \gls{gru}.
+    %  in the context of radio wave propagation function.
+    % First the radio wave propagation will be formulated and then the existing methods for radiolocation systems will be covered.
 
-    % An ideal receiving antenna in an empty space with a gain $G_r$ and placed $d$ meters away from a transmistting antenna with a gain $G_t$ and output po
-    % An ideal antenna in an empty space with a gain of $G_t$ and radiating power of $P_t$, induces power $P_r$ in an antenna which has a gain of $G_r$
-    The fundamental relationship between transmitted $P_t$ and received power $P_r$ occurred between ideal antennas in an empty space with a distance $d$ separation is characterized by Friis' Free Space Equation given below~\cite{friis1946note}.
+    \subsection{Radio Wave Propagation In Radiolocationing Systems}
+        % An ideal receiving antenna in an empty space with a gain $G_r$ and placed $d$ meters away from a transmistting antenna with a gain $G_t$ and output po
+        % An ideal antenna in an empty space with a gain of $G_t$ and radiating power of $P_t$, induces power $P_r$ in an antenna which has a gain of $G_r$
+        The fundamental relationship between transmitted power $P_t$ and the received power $P_r$ occurred between ideal antennas in an empty space with a distance $d$ separation is characterized by Friis' Free Space Equation given below~\cite{friis1946note}.
 
-    \begin{equation}
-        \label{eq:friisWatts}
-            P_r(d) = \dfrac{P_t  G_t  G_r \lambda^2}{{\left(4 \pi d\right)}^2}
-    \end{equation}
+        \begin{equation}
+            \label{eq:friisWatts}
+                P_r(d) = \dfrac{P_t  G_t  G_r \lambda^2}{{\left(4 \pi d\right)}^2}
+        \end{equation}
 
-    In \Cref{eq:friisWatts}, $P_r(d)$ and $P_t$ denote received, and transmitted power with $d$ meters separation between two antennas in Watts, respectively.
-    $G_t$, $G_r$, and $\lambda$ represent unitless gains of transmitter and receiver antennas, and the wavelength, respectively.
-    Since the received power is minuscule level, \Cref{eq:friisdBm} represents Friis' equation in dBm.
+        In \Cref{eq:friisWatts}, $P_r(d)$ and $P_t$ denote received, and transmitted power with $d$ meters separation between two antennas in Watts, respectively.
+        $G_t$, $G_r$, and $\lambda$ represent unitless gains of transmitter and receiver antennas, and the wavelength of the radio wave, respectively.
+        Since the received power is minuscule level, \Cref{eq:friisdBm} represents Friis' equation in dBm.
 
-    \begin{equation}
-      \begin{split}
-        \label{eq:friisdBm}
-        P^{+}_r(d) &= P^{+}_t + 10 \log{G_t} + 10 \log{G_r} + \\
-        & 20 \log{\lambda} - 20 \log{d} - 20 \log{4 \pi}
-      \end{split}
-    \end{equation}
-    $P^{+}_r(d)$ and $P^{+}_t$ represent received and transmitted powers decibel scale.
-    However, neither \Cref{eq:friisWatts}, nor \Cref{eq:friisdBm} holds true for the distance $d = 0$ and $d<\lambda$.
-    Thus, received power generally is denoted relative to a reference point $d_0$ with a prior corresponding received power.
+        \begin{equation}
+          \begin{split}
+            \label{eq:friisdBm}
+            P^{+}_r(d) &= P^{+}_t + 10 \log{G_t} + 10 \log{G_r} + \\
+            & 20 \log{\lambda} - 20 \log{d} - 20 \log{4 \pi}
+          \end{split}
+        \end{equation}
+        $P^{+}_r(d)$ and $P^{+}_t$ represent received and transmitted powers decibel scale.
+        However, neither \Cref{eq:friisWatts}, nor \Cref{eq:friisdBm} holds true for the distance $d = 0$ and $d<\lambda$.
+        Thus, received power generally is denoted relative to a reference point $d_0$ with a prior corresponding received power.
 
-    \begin{equation}
-        \label{eq:friisRef}
-        P^{+}_r(d) = P^{+}_r(d_0) + 20 \log{\dfrac{d_0}{d}}
-    \end{equation}
+        \begin{equation}
+            \label{eq:friisRef}
+            P^{+}_r(d) = P^{+}_r(d_0) + 20 \log{\dfrac{d_0}{d}}
+        \end{equation}
 
-    % \begin{equation}
-    %     \label{eq:pathloss}
-    %     PL(d) = 10 \log{\dfrac{P_t}{P_r}}
-    % \end{equation}
-    Along with representing modeling the received power with a reference point, path loss is another common terminology used in field.
-    The path loss is the difference between received and transmitted power in decibel scale as positive gain.
-    \Cref{eq:log-distance} represents path loss relative to a reference point.
-    One of the major advantages of log-distance path loss model over Friis' free space model is that log-distance path loss model can account for different spaces by varying values of $n$.
+        % \begin{equation}
+        %     \label{eq:pathloss}
+        %     PL(d) = 10 \log{\dfrac{P_t}{P_r}}
+        % \end{equation}
+        Along with representing the received power with a reference point, path loss is another common terminology used in field.
+        The path loss $PL(d)$ represents the attenuation occuring between receiver and transmitter antennas in decibel scale.
+        \Cref{eq:log-distance} represents a special path loss model, i.e. \gls{ldpl}.
+        \gls{ldpl} describes the attenuation relative to a reference point.
+        One of the major advantages of \gls{ldpl} model over Friis' free space model is that log-distance path loss model can account for different spaces by varying values of $n$.
 
-    \begin{equation}
-        \label{eq:log-distance}
-        \overline{PL}(d) = \overline{PL}(d_0) + 10 n \log{\dfrac{d}{d_0}}
-    \end{equation}
+        \begin{equation}
+            \label{eq:log-distance}
+            \overline{PL}(d) = \overline{PL}(d_0) + 10 n \log{\dfrac{d}{d_0}}
+        \end{equation}
 
-    \noindent where $n$ is the path loss exponent and varies depending on the environment.
-    Please note $n = 2$ for empty spaces where there is no reflectors, diffractors or scatterers available in the propagation path.
-    As it can be seen in the \Cref{eq:log-distance}, the received power and separation distance has a log-linear relationship.
-    % \Cref{fig:log-distance} demonstrates the log-distance relationship between received power and the separation between two antennas in two different frequencies in \gls{uhf} radio band.
-    % This figure implies two fundamental problems in radiolocationing systems:
-    % The first problem is that as the carrier frequency increases path loss increases significantly, which limits the radio covarage and localization ability of the system in large environments.
-    % On the other hand, as the carrier frequency increases, the separation between two antennas, i.e. the anchor node and the target to be localized, can be identified with finer resolution.
-    % Therefore, the trade-off between radio coverage and localization resolution can be resolved by employing different frequencies in indoor localization systems by fusing the information acquired from the anchor nodes.
-    While the most visited solution in fingerprinting-based indoor radiolocationing system is to estimate $n$ by fitting a curve to collected fingerprints.
-    After acquiring $n$ is enough for solving for the radial distance $d$ from the anchor node, at least 4 anchor nodes are required to localize an agent in an environment.
+        \noindent where $n$ is the path loss exponent and varies depending on the environment.
+        Please note $n = 2$ for empty spaces where there is no reflectors, diffractors or scatterers available in the propagation path.
+                While the most visited solution in fingerprinting-based indoor radiolocationing system is to estimate $n$ by fitting a curve to collected fingerprints.
+        % After acquiring $n$ is enough for solving for the radial distance $d$ from the anchor node, at least 4 anchor nodes are required to localize an agent in an environment.
 
-    Given the mean measurement $\overline{PL}(d)$, for a point in the environment and path loss exponent $n$ and mean measurement $\overline{PL}(d_0)$ at the reference point $d_0$, the approximated propagation function can be written as:
+        Given the mean path loss $\overline{PL}(d)$ at a location, the path loss exponent $n$ and the mean measurement $\overline{PL}(d_0)$ at the reference point $d_0$, the propagation function of anchor node i $f^i_{d}$ which maps measurements to radial distance $d$ can be written as below.
+    % :\mathbf{m}^i \mapsto \mathbf{d}^i
+        \begin{equation}
+          \label{eq:log-distance-d}
+          f^i_{d} = d_0 10^{\left(\dfrac{\overline{PL}(d)-\overline{PL}(d_0)}{10 n} \right)} = d^i
+        \end{equation}
 
-    \begin{equation}
-      \label{eq:log-distance-d}
-      f_{\hat{d}} = d_0 10^{\left(\dfrac{\overline{PL}(d)-\overline{PL}(d_0)}{10 n} \right)}
-    \end{equation}
 
-    \begin{figure}[thpb]
-       \centering
-       \includegraphics[width=\linewidth]{figures/rss-vs-distance.jpg}
-       \caption{\label{fig:log-distance}RSSI readings of NLoS and LoS APs acquired with a stationary agent}
-    \end{figure}
+    \subsection{Function Approximation Methods}
+        However, in order to obtain radial distance from anchor node i $d^i$, the path loss exponent $n$ should be estimated from the collected data.
+        Let $\mathbf{m}^i = \{m^i_j | j=1 \ldots n_{loc} \}$ and $\mathbf{d}^i = \{ d^i_j | j = 1 \ldots n_{loc}\}$ be the fingerprints acquired from anchor node $i$ during surveying and corresponding distances from anchor node $i$, respectively.
+        The estimated radial distance from anchor node i $\hat{d}^i$ can be obtained with the approximated propagation function $\hat{f}^i_d(m^i_j, n_i^*)$.
 
-    However, in order to obtain $\hat{d}$, the path loss exponent $n$ should be estimated from the collected data.
-    Let $\mathbf{m} = \{m_i | i=1 \ldots n_{location} \}$ and $\mathbf{X} = \{ \mathbf{x}_i | i = 1 \ldots n_{location}\}$ be the fingerprints collected during surveying and corresponding locations, respectively.
-    The approximated propagation function for each anchor nodes can be written as $f_{\hat{d}}(\mathbf{x}, m_i, n): \mathbf{M} \mapsto \mathbf{X}$.
+        \begin{equation}
+          \label{eq:log-distance-d}
+          \hat{f}^i_d(m^i_j, n_i^*) = d^i_0 10^{\left(\dfrac{P^{+}_t - m^i_j - \overline{PL}(d_0)}{10 n_i^*} \right)} = \hat{d}^i_j
+        \end{equation}
 
-    \begin{equation}
-      n^* = \argmin_n \{\norm{\mathbf{X}}_2 - f_{\hat{d}}(\mathbf{X}, \mathbf{m}, n)\}
-    \end{equation}
+        \noindent where $n^*$ is the overall path loss exponent which minimizes the absolute localization error $|d^i_j - \hat{f}^i_d(m^i_j, n^*)|$ where  $j = 1 \ldots n_{loc}$.
+
+        \begin{equation}
+          n^* = \argmin_n \mathbf{e}^i  = \argmin_n \{d^i_j - \hat{f}^i_d(m_i, n)\}
+        \end{equation}
+
+        Least square estimation, linear regresion, SVM, Neural Nets, genetic algorithm and bla bla bla.
 
 
     % Indoor localization is an important problem in which an object of interest, i.e.\ a robot in our framework, suited with different sensors localizes itself in an indoor environment where there is no global positioning information is available.
