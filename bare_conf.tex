@@ -135,8 +135,10 @@
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{caption}
-\usepackage[numbers]{natbib}
+\usepackage{subcaption}
+% \usepackage[numbers]{natbib}
 \usepackage{cleveref}
+\usepackage{bm}
 
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
@@ -205,6 +207,14 @@ Email: tomonari@vt.edu
 \input{inc/mfms.tex}
 \input{inc/experimentation.tex}
 \input{inc/conclusion.tex}
+\begin{figure*}[!pht]
+    %    \begin{subfigure}[b]{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/placeholder-wide.png}
+    \caption{\label{fig:mfms-model}\gls{mfms} Model}
+    %   \end{subfigure}
+\end{figure*}
+
 \input{inc/acknowledgment.tex}
 
 \bibliographystyle{IEEEtran}
