@@ -3,13 +3,13 @@
     This section will cover the fundamentals of radio wave propagation in regards to \gls{firl}.
     \Gls{firl}s are consisted of two main phases.
     The first phase, i.e.\ offline phase,  involves with collecting some form of measurements about the anchor nodes placed in the environment, with corresponding positions.
-    Let $m^i_j$ and $d^i_j$ to be the measurement obtained from anchor node $i$ at a location $j$, and the radial distance of between location $j$ and the anchor node $i$, respectively.
-    The measurement space $\bm{m}^i=\{m^i_j | i=1 \ldots n_{node}, j=1 \ldots n_{loc}\}$ are often constructed in either frequency domain [refer CSI], or time domain.
+    Let $m^i_j \in \mathbb{Z}^1$ and $d^i_j \in \mathbb{R}^1$ to be the measurement obtained from anchor node $i$ at a location $j$, and the radial distance of between location $j$ and the anchor node $i$, respectively.
+    The measurement space $\bm{m}^i=\{m^i_j | j=1 \ldots n_{loc}\} \in \mathbb{R}^{n_{node}}$ are often constructed in either frequency domain [refer CSI], or time domain.
     % The collected measurements are used to approximate the propagation function for each anchor node.
-    The measurements are then used to approximate the propagation function $f^i_d$ of each anchor node.
+    The measurements are then used to approximate the propagation function $f^i_d$ of each anchor node, with which $\mathbb{Z}^1\mapsto\mathbb{R}^1$.
 
     \begin{equation}
-        f^i_d: \bm{m}^i \mapsto \bm{d}^i
+        f^i_d(m^i_j)=d^i_j
     \end{equation}
 
     One of the most popular fingerprint is \gls{rss} in \gls{firl}s due to its simplicity in acquiring the fingerprints.
@@ -75,7 +75,7 @@
 
     \begin{equation}
       \label{eq:log-distance-d}
-      f^i_{d} = d_0 10^{\left(\dfrac{\overline{PL}(d)-\overline{PL}(d_0)}{10 n} \right)} = d^i
+      f^i_{d} = d^i_0 10^{\left(\dfrac{\overline{PL}(d)-\overline{PL}(d_0)}{10 n} \right)} = d^i_j
     \end{equation}
 
 
@@ -87,11 +87,10 @@
       \label{eq:log-distance-d-app}
       \hat{f}^i_d(m^i_j, n_i^*) = d^i_0 10^{\left(\dfrac{\widetilde{P}_t - \widetilde{P}_r^{i,j}(d) - \overline{PL}(d_0)}{10 n_i^*} \right)} = \hat{d}^i_j
     \end{equation}
-
-    \noindent where $n^*$ is the overall \gls{pl} exponent which minimizes the absolute localization error $|d^i_j - \hat{f}^i_d(m^i_j, n^*)|$ where  $j = 1 \ldots n_{loc}$.
+    where $n^*$ is the overall \gls{pl} exponent which minimizes the absolute localization error $|d^i_j - \hat{f}^i_d(m^i_j, n^*)|$ where  $j = 1 \ldots n_{loc}$.
 
     \begin{equation}
-      n^* = \argmin_n \bm{e}^i  = \argmin_n \{d^i_j - \hat{f}^i_d(m_i, n)\}
+      n^*_i = \argmin_n \bm{e}^i  = \argmin_n \{d^i_j - \hat{f}^i_d(m_i, n)\}
     \end{equation}
 
     After obtaining the approximated propagation function, the measurements acquired from the anchor nodes are mapped to relative radial distances in order to distinguish the absolute position of the agent in the environment, which forms the offline phase of the \gls{firl}s.
