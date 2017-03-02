@@ -2,11 +2,11 @@
 \label{sec:fundamentals}
     This section will cover the fundamentals of radio wave propagation in regards to \gls{firl}.
     \Gls{firl}s are consisted of two main phases.
-    The first phase, i.e.\ offline phase,  involves with collecting some form of measurements about the anchor nodes placed in the environment, with corresponding positions.
+    The first phase, i.e.\ offline phase,  involves with collecting some form of measurements about the anchor nodes placed in the environment, along with the corresponding positions.
     Let $m^i_j \in \mathbb{Z}^1$ and $d^i_j \in \mathbb{R}^1$ to be the measurement obtained from anchor node $i$ at a location $j$, and the radial distance of between location $j$ and the anchor node $i$, respectively.
-    The measurement space $\bm{m}^i=\{m^i_j | j=1 \ldots n_{loc}\} \in \mathbb{R}^{n_{node}}$ are often constructed in either frequency domain [refer CSI], or time domain.
+    The measurement space $\bm{m}^i=\{m^i_j | j=1 \ldots n_{loc}\} \in \mathbb{R}^{n_{loc}}$ are often constructed in either frequency domain [refer CSI], or time domain.
     % The collected measurements are used to approximate the propagation function for each anchor node.
-    The measurements are then used to approximate the propagation function $f^i_d$ of each anchor node, with which $\mathbb{Z}^1\mapsto\mathbb{R}^1$.
+    The measurements are then used to approximate the propagation function $f^i_d:\mathbb{Z}^1\mapsto\mathbb{R}^1$ of anchor node $i$.
 
     \begin{equation}
         f^i_d(m^i_j)=d^i_j
@@ -17,13 +17,11 @@
 
     \begin{equation}
         \label{eq:friisWatts}
-            P_r(d) = \dfrac{P_t  G_t  G_r \lambda^2}{{\left(4 \pi d\right)}^2}
+            P_r(d) = \dfrac{P_t  G_t  G_r \lambda^2}{{\left(4 \pi d\right)}^2 L}
     \end{equation}
 
     % In \Cref{eq:friisWatts}, $P_r(d)$ and $P_t$ denote received, and transmitted signal strengths with $d$ meters separation between two antennas in Watts, respectively.
     In \Cref{eq:friisWatts}, $G_t$, and $G_r$ denote unitless gains of transmitter and receiver antennas, respectively, whereas $\lambda$ is the wavelength of the radio wave.
-    However well-known, \gls{ffse} is not able to model propagation mechanisms, i.e.\ reflection, diffraction or scattering occurring along the the propagation path, due to the fact that it can only model \gls{los} propagation.
-    Thus, it is often impractical to utilize it in indoor localization problems where reflection and diffraction occurs along the propagation path.
     Moreover, since the received signal strength is often minuscule level, \gls{ffse} is denoted in decibel scale relative to a milliwatt.
 
     \begin{equation}
@@ -47,7 +45,9 @@
     %     PL(d) = 10 \log{\dfrac{P_t}{P_r}}
     % \end{equation}
 
-    Based on \gls{ffse}, path loss occurring along the propagation path can be derived as the difference between transmitted and received signal strength.
+    However well-known, neither \gls{ffse} nor its variants  is able to model major propagation mechanisms, i.e.\ reflection, diffraction or scattering occurring along the the propagation path, due to the fact that it can only model \gls{los} propagation.
+    Thus, it is often impractical to utilize it in indoor localization problems where reflection and diffraction occurs along the propagation path.
+    Therefore, the path loss occurring along the propagation path can be derived as sum of the difference between transmitted and received signal strength and other losses occurring along the propagation path.
     \Cref{eq:log-distance} represents a special \gls{pl} model, i.e. \gls{ldpl} which describes the attenuation relative to a reference point.
     One of the major advantages of \gls{ldpl} model over \gls{ffse} is that \gls{ldpl} model can account for obstructions and corresponding wave propagation in the space with varying values of \gls{pl} exponent $n$.
     % \gls{pl} represents the attenuation occuring between receiver and transmitter antennas in decibel scale.
@@ -81,16 +81,17 @@
 
     However, in order to obtain radial distance from anchor node i $d^i$, \gls{pl} exponent $n$ should be estimated from the data collected during the offline phase.
     Let $\bm{m}^i = \{\widetilde{P}_r^{i,j}(d) | j=1 \ldots n_{loc} \}$ and $\bm{d}^i = \{ d^i_j | j = 1 \ldots n_{loc}\}$ be the \gls{rss} fingerprints acquired from anchor node $i$ during surveying and corresponding distances from anchor node $i$, respectively.
-    The estimated radial distance from anchor node i $\hat{d}^i$ can be obtained with the approximated propagation function $\hat{f}^i_d(m^i_j, n_i^*)$.
+    The estimated radial distance from anchor node i $\hat{d}^i$ can be obtained with an approximated propagation function $\hat{f}^i_d(m^i_j, n_i^*)$.
 
     \begin{equation}
       \label{eq:log-distance-d-app}
       \hat{f}^i_d(m^i_j, n_i^*) = d^i_0 10^{\left(\dfrac{\widetilde{P}_t - \widetilde{P}_r^{i,j}(d) - \overline{PL}(d_0)}{10 n_i^*} \right)} = \hat{d}^i_j
     \end{equation}
-    where $n^*$ is the overall \gls{pl} exponent which minimizes the absolute localization error $|d^i_j - \hat{f}^i_d(m^i_j, n^*)|$ where  $j = 1 \ldots n_{loc}$.
+    where $n^*$ is the overall \gls{pl} exponent which minimizes the sum of the absolute localization error.
+    %  $\sum_j |d^i_j - \hat{f}^i_d(m^i_j, n^*)|$ where  $j = 1 \ldots n_{loc}$.
 
     \begin{equation}
-      n^*_i = \argmin_n \bm{e}^i  = \argmin_n \{d^i_j - \hat{f}^i_d(m_i, n)\}
+      n^*_i = \argmin_n \bm{e}^i  = \argmin_n \sum_j |d^i_j - f^i_d(m^i_j, n)|
     \end{equation}
 
     After obtaining the approximated propagation function, the measurements acquired from the anchor nodes are mapped to relative radial distances in order to distinguish the absolute position of the agent in the environment, which forms the offline phase of the \gls{firl}s.

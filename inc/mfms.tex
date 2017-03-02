@@ -44,13 +44,13 @@
        \caption{\label{fig:module}\gls{mfms} Anchor Nodes}
     \end{figure}
 
-    \subsection{Temporally- and Spatially-coherent Path Loss Exponent Estimation}
+    \subsection{Spatially-coherent Path Loss Exponent Estimation}
     This section covers the details of the joint path loss exponent estimation  which forms the first stage of \gls{mfms}.
     We approach the \gls{firl} problem in the scope of curve fitting.
     However, unlike many approaches proposed mentioned earlier, \gls{mfms} does not try to blindly fit a function which best explains the training data given the location labels.
     Moreover, \gls{mfms} does not consider the path loss exponent as a variable describing the whole localization environment.
-    Instead, we approach the problem as curve fitting for path loss exponent differing in value in the environment and time.
-    In detail, the path loss exponent for \gls{mfms} is a function of both location and time.
+    Instead, we approach the problem as curve fitting for path loss exponent differing in value depending on the regions in the environment agent resides.
+    In detail, the path loss exponent for \gls{mfms} is a function of both location.
     Therefore, the proposed system is able account for non-uniform distribution of obstructions in space.
 
     \begin{figure}[thpb]
@@ -61,8 +61,9 @@
 
     Let $\Omega=\{g_i | i=1\ldots n_{grid}\}$, is the localization environment which is divided into $n_{grid}$ number of grids $g$.
     An arbitrary position $\bm{x} \in \Omega$ can be in a shadowed region for any anchor node; thus, \gls{mfms} selectively chooses which anchor nodes to use to localize the agent in $\Omega$.
-    This selection is performed by mapping the measurement vector $\bm{m}^{k}_j \in \mathbb{Z}^{n_{node}}$ with a set of weights $\bm{w}_g \in \mathbb{R}^{n_{node}}$ such that $\sum_g \bm{w}_g = 1$.
-    The weights of each grid is learned with a softmax classifier, which is depicted in \Cref{fig:softmax}, based on \gls{lora} measurements due to the fact that the higher probability of observing multiple \gls{lora} modules in arbitrary positions in the environment, thanks to the smallar path loss they introduce.
+    This selection is performed by mapping the measurement vector acquired at time step $k$ $\bm{m}^{k}_j \in \mathbb{Z}^{n_{node}}$ with a set of weights $\bm{w}_g \in \mathbb{R}^{n_{node}}$ such that $\sum_g \bm{w}_g = 1$.
+    The weights of each grid is learned with a softmax classifier, which is depicted in \Cref{fig:softmax}.
+    The classifier is solely based on \gls{lora} measurements due to the fact that the higher probability of observing multiple \gls{lora} modules in arbitrary positions in the environment, thanks to the smallar path loss they introduce.
     \Cref{eq:weighted_m} shows the result of the selection process.
 
     \begin{equation}
@@ -71,12 +72,12 @@
     \end{equation}
 
     For each anchor node, the path loss exponent is estimated with \gls{ldpl} model in a least square sense.
-    Hence, \gls{mfms} incorporates the physical parameters into location estimation process.
+    The estimated spatially-coherent path loss exponent, a set physical parameter defining the radio wave propagation, is incorporated into the location estimation process explained in Stage-II\@.
 
     \begin{equation}
-        n^{*,i}_g = \argmin_n\{ \norm{\bm{x}_g}_2 - f_d(\cdot)\}
+        n^{*,i}_g = \argmin_n\ \sum_j \left(\norm{\bm{x}_g}_2 - f_d(m^i_{j_g},n)\right)^2
     \end{equation}
-    where $\bm{x}_g$ denotes the center position of grid $g$, and $f_d(\cdot)$ denotes \gls{ldpl} model.
+    where $\bm{x}_g$ and $m^i_{j_g}$ denote the center position of grid $g$, and measurements acquired in grid $g$, while $f_d(\cdot)$ denotes \gls{ldpl} model.
 
     \subsection{Pinpoint Localization}
     This section gives details of the second stage of the \gls{mfms} which is the pinpoint localization.
@@ -100,7 +101,7 @@
     The propagation function of WiFi $\hat{g}^w_d(\cdot)$ and Bluetooth $\hat{g}^b_d(\cdot)$ anchors are approximated with two separate recurrent neural networks, consisting of three layers of \gls{gru}~\cite{cho2014learning}.
     These functions are attained with a \gls{sgd} based back-propagation algorithm.
     After approximating the propagation functions, these are employed to estimate the location of the agent.
-    Specifically, the pinpointing algorithm incorporates the spatially- and temporally-coherent path loss exponent along with the weighted measurements to estimate $\bm{\hat{x}}^w$ and $\bm{\hat{x}}^b$, estimated positions by using WiFi measurements and Bluetooth measurements, respectively.
+    Specifically, the pinpointing algorithm incorporates the spatially-coherent path loss exponent along with the weighted measurements to estimate $\bm{\hat{x}}^w$ and $\bm{\hat{x}}^b$, estimated positions by using WiFi measurements and Bluetooth measurements, respectively.
 
     \Cref{fig:gru} depicts the Stage-II of \gls{mfms} in an unfolded representation.
     % The locatization environment is divided into $n_{grid}$ number of grids in order to obtain
