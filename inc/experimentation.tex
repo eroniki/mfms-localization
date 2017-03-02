@@ -1,15 +1,29 @@
 \section{Experimentation}
 
     \subsection{Experimental Setup}
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    This section will lay out the outline of the experimantation conducted.
+    The experimentations are conducted on two different environments depicted on \Cref{fig:environment}.
+    The first environment is a such-by-so area with no obstructions, while the second environment resides in a basement of Randolph Hall, Virginia Tech.
+    The second environment consists of narrow corridors which results in multipath propagation due to reflection and guiding effect of the walls.
+    The circles on \Cref{fig:environment} denote the location of the anchor nodes, while the grid size is set to be 50 centimeters, approximately 4 times of the wavelength of the WiFi and Bluetooth.
+    Therefore, environment 1 and environment 2 consists of such and so grids, respectively.
+    The efficacy of different stages of \gls{mfms} is investigated separately and all-combined.
+    The first experimentation investigates the accuracy of grid-level localization which forms the Stage-I is examined in a statistical manner, while second experimentation investigates the accuracy of pinpoint localization stage.
+    Later, the efficacy of the information fusion stage is investigated by comparing the results of individual WiFi and Bluetooth estimates to the fused estimates.
+    The validity of \gls{mfms} is studied by repeating the experiments on two different environments of different sizes which introduces different level of obstructions.
+
     \subsubsection{Hardware}
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    The anchor nodes used during the experimentations depicted on \Cref{fig:module}.
+    In detail, \gls{mfms} employes low-cost and off-the-shelf radio modules in the design of the anchor nodes.
+    Each anchor node contains an XBee, referred as \gls{lora} working at 900 MHz, and a ESP32 containing a WiFi \gls{AP} and a Bluetooth working at 2.4 GHz.
+    \Cref{tab:specs} lays out the details of the individual module specification in detail.
+    The mobile agent is equipped with an ESP32 and a low-cost Bluetooth module based on CSR8510 chipset.
+
     \subsubsection{Software}
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    ROS~\cite{quigley2009ros}
-    Keras~\cite{chollet2015}
-    Tensorflow~\cite{tensorflow2015-whitepaper}
+    \gls{lora}, WiFi, and Bluetooth measurements are collected with the module placed on the mobile agent, and transmitted to onboard computer via Serial communication protocol.
+    The synchronization of the radios along with the parsing of the serial packets are implemented with ROS~\cite{quigley2009ros}.
+    The approximation of the propagation function is achieved with the help of Keras~\cite{chollet2015} which uses Tensorflow~\cite{tensorflow2015-whitepaper} as the backend.
+
     \subsection{Results}
     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
