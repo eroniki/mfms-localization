@@ -16,7 +16,7 @@
     The main motivation behind employing multisource information is to exploit the diversity of the propagation characteristics of the different frequencies.
     As can be seen in the \Cref{eq:log-distance} and \Cref{fig:log-distance}, the received power and separation distance shows a log-linear relationship.
     %  demonstrates the log-distance relationship between received power and the separation between two antennas in two different frequencies in \gls{uhf} radio band.
-    This figure implies two fundamental problems in radiolocationing systems:
+    This figure implies two fundamental problems in radiolocation systems:
     The first problem is that as the carrier frequency increases path loss increases significantly, which limits the radio covarage and localization ability of the system in large environments.
     On the other hand, as the carrier frequency increases, the separation between two antennas, i.e.\ the anchor node and the target to be localized, can be identified with finer spatial resolution.
     Therefore, the trade-off between radio coverage and spatial localization resolution can be resolved by employing different frequencies in indoor localization systems by fusing the information acquired from the anchor nodes using different carrier frequencies.
@@ -63,7 +63,7 @@
     An arbitrary position $\bm{x} \in \Omega$ can be in a shadowed region for any anchor node; thus, \gls{mfms} selectively chooses which anchor nodes to use to localize the agent in $\Omega$.
     This selection is performed by mapping the measurement vector acquired at time step $k$ $\bm{m}^{k}_j \in \mathbb{Z}^{n_{node}}$ with a set of weights $\bm{w}_g \in \mathbb{R}^{n_{node}}$ such that $\sum_g \bm{w}_g = 1$.
     The weights of each grid is learned with a softmax classifier, which is depicted in \Cref{fig:softmax}.
-    The classifier is solely based on \gls{lora} measurements due to the fact that the higher probability of observing multiple \gls{lora} modules in arbitrary positions in the environment, thanks to the smallar path loss they introduce.
+    The classifier is solely based on \gls{lora} measurements due to the higher probability of observing multiple \gls{lora} modules in arbitrary positions in the environment, thanks to the smallar path loss they introduce.
     \Cref{eq:weighted_m} shows the result of the selection process.
 
     \begin{equation}
@@ -75,7 +75,7 @@
     The estimated spatially-coherent path loss exponent, a set physical parameter defining the radio wave propagation, is incorporated into the location estimation process explained in Stage-II\@.
 
     \begin{equation}
-        n^{*,i}_g = \argmin_n\ \sum_j \left(\norm{\bm{x}_g}_2 - f_d(m^i_{j_g},n)\right)^2
+        n^{*,i}_g = \argmin_n{\sum_j \left(\norm{\bm{x}_g}_2 - f_d(m^i_{j_g},n)\right)^2}
     \end{equation}
     where $\bm{x}_g$ and $m^i_{j_g}$ denote the center position of grid $g$, and measurements acquired in grid $g$, while $f_d(\cdot)$ denotes \gls{ldpl} model.
 
