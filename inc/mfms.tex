@@ -1,8 +1,8 @@
 \section{Multifrequency Multistage Radiolocation System}
 \label{sec:mfms}
-    This section will explain \gls{mfms} in greater detail.
+    This section explains \gls{mfms} in greater detail.
     Akin to other \gls{firl}s, \gls{mfms} consists of two main phases.
-    During the offline phase, \gls{rss} information from anchor nodes are collected at many locations in the environment and used to approximate the radio wave propagation function.
+    During the offline phase, \gls{rss} information from anchor nodes is collected at many locations in the environment and used to approximate the radio wave propagation function.
     The online phase, on the other hand, makes use of the approximated propagation function obtained in the former phase.
     %  is used for localization purposes with new observations obtained at arbitrary locations.
     However, one major difference between \gls{mfms} and conventional \gls{firl} approaches is that \gls{mfms} employs three types of radio setups in three different stages to infer the location of the agent.
@@ -14,14 +14,14 @@
     \end{figure}
 
     The main motivation behind employing multisource information is to exploit the diversity of the propagation characteristics of the different frequencies.
-    As it can be seen in the \Cref{eq:log-distance} and \Cref{fig:log-distance}, the received power and separation distance has a log-linear relationship.
+    As can be seen in the \Cref{eq:log-distance} and \Cref{fig:log-distance}, the received power and separation distance shows a log-linear relationship.
     %  demonstrates the log-distance relationship between received power and the separation between two antennas in two different frequencies in \gls{uhf} radio band.
     This figure implies two fundamental problems in radiolocationing systems:
     The first problem is that as the carrier frequency increases path loss increases significantly, which limits the radio covarage and localization ability of the system in large environments.
     On the other hand, as the carrier frequency increases, the separation between two antennas, i.e.\ the anchor node and the target to be localized, can be identified with finer spatial resolution.
-    Therefore, the trade-off between radio coverage and spatial localization resolution can be resolved by employing different frequencies in indoor localization systems by fusing the information acquired from the anchor nodes using different carrier frequency.
-    Thus, \gls{mfms} employs a \gls{lora} radio (900 MHz), a WiFi \gls{ap} and a Bluetooth (2.4 GHz) beacon in each anchor nodes.
-    \Cref{tab:specs} tabulates the specifications of the radios consisting each anchor node, while \Cref{fig:module} demonstrates the details of the anchor nodes.
+    Therefore, the trade-off between radio coverage and spatial localization resolution can be resolved by employing different frequencies in indoor localization systems by fusing the information acquired from the anchor nodes using different carrier frequencies.
+    Thus, \gls{mfms} employs a \gls{lora} (900 MHz), a WiFi \gls{ap} and a Bluetooth (2.4 GHz) beacon in each anchor node.
+    \Cref{tab:specs} tabulates the specifications of the radios consisting in each anchor node, while \Cref{fig:module} demonstrates the details of the anchor nodes.
     In detail, wider spatial coverage is achieved by using \gls{lora} modules working at 900 MHz while finer spatial resolution provided by WiFi and Bluetooth both working at 2.4 GHz frequency.
 
     \begin{table}
@@ -45,12 +45,12 @@
     \end{figure}
 
     \subsection{Spatially-coherent Path Loss Exponent Estimation}
-    This section covers the details of the joint path loss exponent estimation  which forms the first stage of \gls{mfms}.
+    This section covers the details of the joint path loss exponent estimation which forms the first stage of \gls{mfms}.
     We approach the \gls{firl} problem in the scope of curve fitting.
     However, unlike many approaches proposed mentioned earlier, \gls{mfms} does not try to blindly fit a function which best explains the training data given the location labels.
     Moreover, \gls{mfms} does not consider the path loss exponent as a variable describing the whole localization environment.
-    Instead, we approach the problem as curve fitting for path loss exponent differing in value depending on the regions in the environment agent resides.
-    In detail, the path loss exponent for \gls{mfms} is a function of both location.
+    Instead, we approach the problem as curve fitting for path loss exponent differing in value depending on the regions at which the agent resides.
+    In other words, the path loss exponent for \gls{mfms} is a function of both location.
     Therefore, the proposed system is able account for non-uniform distribution of obstructions in space.
 
     \begin{figure}[thpb]
@@ -90,7 +90,7 @@
     %   n(k,t)^* = \argmin_n \bm{e}^i  = \argmin_n \{d^i_j - \hat{f}^i_d(m_i, n, t)\}
     \end{equation}
     where $\bm{\widetilde{m}}^{k-n_{m}:k}_j$, $\bm{n}^*_g$, and $\bm{\hat{x}}$ are the weighted measurement vector between time steps $k-n_m$ and $k$, the estimated path loss exponent vector of each anchor node for grid $g$ and the estimated absolute position of the agent, respectively.
-    As it can be seen in \Cref{eq:propfunct}, the propagation function incorporates the weighted measurements with the spatially- and temporally-coherent path loss exponent so that the physical characteristics of the radio waves, represented with the path loss, are enforced into the model as a parameter.
+    As can be seen in \Cref{eq:propfunct}, the propagation function incorporates the weighted measurements with the spatially- and temporally-coherent path loss exponent so that the physical characteristics of the radio waves, represented with the path loss, are enforced into the model as a parameter.
 
     \begin{figure}[thpb]
        \centering
