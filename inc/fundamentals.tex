@@ -1,8 +1,8 @@
 \section{Radio Wave Propagation in Radiolocation}
 \label{sec:fundamentals}
     This section will cover the fundamentals of radio wave propagation with regards to \gls{firl}.
-    \Gls{firl}s consists of two main phases.
-    The first phase, i.e.\ offline phase,  involves with collecting some form of measurements about the anchor nodes placed in the environment, along with the corresponding positions.
+    \Gls{firl}s consist of two main phases.
+    The first phase, offline phase,  involves the collection of measurements about the anchor nodes placed in the environment, along with the positions measurements are taken.
     Let $m^i_j \in \mathbb{Z}^1$ and $d^i_j \in \mathbb{R}^1$ be the measurement obtained from anchor node $i$ at  location $j$, and the radial distance between location $j$ and anchor node $i$, respectively.
     The measurement space $\bm{m}^i=\{m^i_j | j=1 \ldots n_{loc}\} \in \mathbb{R}^{n_{loc}}$ is often constructed in either frequency domain [refer CSI], or time domain.
     % The collected measurements are used to approximate the propagation function for each anchor node.
@@ -12,8 +12,8 @@
         f^i_d(m^i_j)=d^i_j
     \end{equation}
 
-    One of the most popular fingerprints are \gls{rss} in \gls{firl}s due to its simplicity in acquiring the fingerprints.
-    The fundamental relationship between transmitted and received signal strengths $P_t$ and $P_r(d)$ between ideal antennas in an empty space with a separation distance $d$ is characterized by \gls{ffse} given below~\cite{friis1946note}.
+    One of the most popular fingerprints is \gls{rss} in \gls{firl}s due to its simplicity in fingerprint acquisition during the surveying.
+    The fundamental relationship between transmitted and received signal strengths $P_t$ and $P_r(d)$ between ideal antennas in an empty space with a separation distance $d$ is characterized by \gls{ffse}, given below~\cite{friis1946note}.
 
     \begin{equation}
         \label{eq:friisWatts}
@@ -21,8 +21,8 @@
     \end{equation}
 
     % In \Cref{eq:friisWatts}, $P_r(d)$ and $P_t$ denote received, and transmitted signal strengths with $d$ meters separation between two antennas in Watts, respectively.
-    In \Cref{eq:friisWatts}, $G_t$, and $G_r$ denote the unitless gains of transmitter and receiver antennas, respectively, whereas $\lambda$ is the wavelength of the radio wave.
-    Moreover, since the received signal strength is often minuscule level, \gls{ffse} is denoted in the decibel scale relative to a milliwatt.
+    In \Cref{eq:friisWatts}, $G_t$ and $G_r$ denote the unitless gains of transmitter and receiver antennas, respectively, whereas $\lambda$ is the wavelength of the radio wave.
+    Moreover, since the received signal strength is often at a minuscule level, the \gls{ffse} is denoted in the decibel scale relative to a milliwatt.
 
     \begin{equation}
       \begin{split}
@@ -31,8 +31,8 @@
         & 20 \log{\lambda} - 20 \log{d} - 20 \log{4 \pi}
       \end{split}
     \end{equation}
-    $\widetilde{P}_r(d)$ and $\widetilde{P}_t$ represent received and transmitted signal strengths decibel scale.
-    However, neither \Cref{eq:friisWatts} nor \Cref{eq:friisdBm} holds true for the distance $0<d<\lambda$.
+    $\widetilde{P}_r(d)$ and $\widetilde{P}_t$ represent received and transmitted signal strengths in the decibel scale.
+    Although, neither \Cref{eq:friisWatts} nor \Cref{eq:friisdBm} holds true for the distance $0<d<\lambda$.
     Thus, received signal strength is generally denoted relative to a reference point $d_0$ with a prior corresponding received signal strength.
 
     \begin{equation}
@@ -45,11 +45,11 @@
     %     PL(d) = 10 \log{\dfrac{P_t}{P_r}}
     % \end{equation}
 
-    However well-known, neither \gls{ffse} nor its variants are able to model major propagation mechanisms, i.e.\ reflection, diffraction or scattering occurring along the the propagation path, due to the fact that it can only model \gls{los} propagation.
-    Thus, it is often impractical to utilize it in indoor localization problems where reflection and diffraction occurs along the propagation path.
-    Therefore, the path loss occurring along the propagation path can be derived as the sum of the difference between transmitted and received signal strength and other losses occurring along the propagation path.
+    However well-known, neither the \gls{ffse} nor its variants are able to model major propagation mechanisms, i.e.\ reflection, diffraction or scattering occurring along the the propagation path, due to the fact that it can only model \gls{los} propagation.
+    Thus, it is often impractical to utilize the \gls{ffse} in indoor localization problems where reflection and diffraction occurs along the propagation path.
+    Therefore, the path loss occurring along the propagation path can be derived as the sum of the difference between transmitted and received signal strength as well as other losses occurring along the propagation path.
     \Cref{eq:log-distance} represents a special \gls{pl} model, i.e. \gls{ldpl} which describes the attenuation relative to a reference point.
-    One of the major advantages of \gls{ldpl} model over \gls{ffse} is that \gls{ldpl} model can account for obstructions and corresponding wave propagation in the space with varying values of \gls{pl} exponent $n$.
+    One of the major advantages of the \gls{ldpl} model over the the \gls{ffse} is that the \gls{ldpl} model can account for obstructions and corresponding wave propagation in the space with varying values of \gls{pl} exponent $n$.
     % \gls{pl} represents the attenuation occuring between receiver and transmitter antennas in decibel scale.
 
     % Along with representing the received signal strength with a reference point, \gls{pl} is another common terminology used in field.
@@ -71,7 +71,7 @@
     \end{equation}
 
     One of the most common solution in \gls{firl}s is to estimate $n$ by fitting a curve to collected fingerprints.
-    Given a mean \gls{pl} at an unknown location $\overline{PL}(d)$, \gls{pl} exponent $n$ and a mean \gls{pl} at the reference point $d_0$ $\overline{PL}(d_0)$, the propagation function of anchor node i $f^i_{d}$ can be obtained by solving \gls{ldpl} for the radial distance $d^i$.
+    Given a mean \gls{pl} at an unknown location $\overline{PL}(d)$, \gls{pl} exponent $n$ and a mean \gls{pl} at the reference point $d_0$ $\overline{PL}(d_0)$, the propagation function of anchor node i $f^i_{d}$ can be obtained by solving the \gls{ldpl} for the radial distance $d^i$.
 
     \begin{equation}
       \label{eq:log-distance-d}
@@ -94,7 +94,7 @@
       n^*_i = \argmin_n \sum_j |d^i_j - f^i_d(m^i_j, n)|
     \end{equation}
 
-    After obtaining the approximated propagation function, the measurements acquired from the anchor nodes are mapped to relative radial distances in order to distinguish the absolute position of the agent in the environment, which forms the offline phase of the \gls{firl}s.
+    After obtaining the approximated propagation function, the measurements acquired from the anchor nodes are mapped to relative radial distances in order to distinguish the absolute position of the agent in the environment, which forms the online phase of the \gls{firl}s.
     % One of the most prominent method is trilateration where the intersection of the radial distances is assumed to be the absolute location of the agent.
     % However, this method is impratical in \gls{firl}s due to dynamic nature of the indoor environments, and high probability of receiving degraded signal caused by multipath or shadowing effects.
     % During offline phase, there exists many methods to acquire absolute location of the agent, namely, trilateration method [trilateration], least squares method [least squares], linear regression [linear regression].

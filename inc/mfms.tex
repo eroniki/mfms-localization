@@ -44,7 +44,7 @@
        \caption{\label{fig:module}\gls{mfms} Anchor Nodes}
     \end{figure}
 
-    \subsection{Spatially-coherent Path Loss Exponent Estimation}
+    \subsection{Stage 1:Spatially-coherent Path Loss Exponent Estimation}
     This section covers the details of the joint path loss exponent estimation which forms the first stage of \gls{mfms}.
     We approach the \gls{firl} problem in the scope of curve fitting.
     However, unlike many approaches proposed mentioned earlier, \gls{mfms} does not try to blindly fit a function which best explains the training data given the location labels.
@@ -79,7 +79,7 @@
     \end{equation}
     where $\bm{x}_g$ and $m^i_{j_g}$ denote the center position of grid $g$, and measurements acquired in grid $g$, while $f_d(\cdot)$ denotes \gls{ldpl} model.
 
-    \subsection{Pinpoint Localization}
+    \subsection{Stage 2:Pinpoint Localization}
     This section gives details of the second stage of the \gls{mfms} which is the pinpoint localization.
     After localizing the agent in grid-level and selecting which anchor nodes to be employed, the propagation function $\hat{g}_d(\cdot)$ can be formulated as below:
     % , which $\mathbb{Z}^{n_{node}\times n_m} \mapsto \mathbb{R}^2$:
@@ -107,7 +107,7 @@
     % The locatization environment is divided into $n_{grid}$ number of grids in order to obtain
 
 
-    \subsection{Information Fusion}
+    \subsection{Stage 3:Information Fusion}
     This section of the paper further explains the Stage-III of the \gls{mfms}.
     The Stage-III is essentially an information fusion layer of the model where location estimates of WiFi and Bluetooth measurements are fused into one final entity.
     The incorporation of two estimates are achieved in the framework of a \gls{nn} consisting of 3 layers.
