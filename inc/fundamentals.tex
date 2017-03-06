@@ -47,8 +47,8 @@
 
     However well-known, neither the \gls{ffse} nor its variants are able to model major propagation mechanisms, i.e.\ reflection, diffraction or scattering occurring along the the propagation path, due to the fact that it can only model \gls{los} propagation.
     Thus, it is often impractical to utilize the \gls{ffse} in indoor localization problems where reflection and diffraction occurs along the propagation path.
-    Therefore, the path loss occurring along the propagation path can be derived as the sum of the difference between transmitted and received signal strength as well as other losses occurring along the propagation path.
-    \Cref{eq:log-distance} represents a special \gls{pl} model, i.e. \gls{ldpl} which describes the attenuation relative to a reference point.
+    The energy loss occurring along the propagation path which can be derived as the difference between transmitted and received signal strength should incorporate the loss occurring \gls{los} propagation with other losses due to the structure of the environment.
+    \Cref{eq:log-distance} represents a special \gls{pl} model, i.e. \gls{ldpl} which describes the attenuation relative to a reference point as the sum of the \gls{los} propagation losses and the losses resulted by the structure of the environment.
     One of the major advantages of the \gls{ldpl} model over the the \gls{ffse} is that the \gls{ldpl} model can account for obstructions and corresponding wave propagation in the space with varying values of \gls{pl} exponent $n$.
     % \gls{pl} represents the attenuation occuring between receiver and transmitter antennas in decibel scale.
 
