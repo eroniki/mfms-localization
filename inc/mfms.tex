@@ -1,14 +1,29 @@
 \section{Multifrequency Multistage Radiolocation System}
 \label{sec:mfms}
     This section explains \gls{mfms} in greater detail.
-    Akin to other \gls{firl}s, \gls{mfms} consists of two main phases.
-    During the offline phase, \gls{rss} information from anchor nodes is collected at many locations in the environment and used to approximate the radio wave propagation function.
+    Akin to conventional \gls{firl}s, \gls{mfms} consists of two main phases, i.e.\ online and offline phases.
+    During the offline phase, \gls{rss} and \gls{rtt} fingerprints from all anchor nodes are collected at many locations in the environment.
+    The measurements are then used to approximate the radio wave propagation function to localize the agent in an environment.
     The online phase, on the other hand, makes use of the approximated propagation function obtained in the former phase.
     %  is used for localization purposes with new observations obtained at arbitrary locations.
-    However, one major difference between \gls{mfms} and conventional \gls{firl} approaches is that \gls{mfms} employs three types of radio setups in three different stages to infer the location of the agent.
+    However, one major difference between \gls{mfms} and conventional \gls{firl} approaches is that \gls{mfms} employs two different types of radio modules in three different stages to infer the location of the agent.
+    Another major difference of the proposed method is that the acquired measurements are regarded as sequences in order to create a temporal-coherence between consecutive estimations.
 
-    The first stage of \gls{mfms}, localizes the agent with a grid-level accuracy based on \gls{lora} measurements, while the second stage employs WiFi and Bluetooth measurements separately to localize the agent within the grid attained in the former stage.
-    The location estimates based on WiFi and Bluetooth measurements are fused into one final estimate.
+    \begin{figure}[thpb]
+      \centering
+      \includegraphics[width=\linewidth]{figures/mfms.png}
+      \caption{\label{fig:mfms-model}\gls{mfms} Model: Grid-level localization stage infers the location of the agent in grid-level granularity represented as a probabilistic distribution over the localization environment $\bm{\Omega}$, while in Stage-2 the granularity of estimations are minimized to a point $\in \mathbb{R}^3$.
+      In Stage 3, on the other hand, the grid-level estimation is fused with the point estimation of Stage 2.}
+      %   \end{subfigure}
+    \end{figure}
+
+    \Cref{fig:mfms-model} shows the general layout of the proposed method.
+    The first stage of \gls{mfms}, localizes the agent with a grid-level granularity solely based on measurements from 900 MHz radios.
+    The grid-cell level estimations are represented with probabilistic belief function over localization environment.
+    The second stage, on the other hand, utilizes 2.4 GHz radios and considers measurements as sequences in order to create a temporal-coherence between consecutive estimations.
+    The radio wave propagation function is approximated within a Recurrent Neural Network framework due to its natural ability to employ sequences in the approximation.
+    % while the second stage employs measurements from 2.4 GHz radios to localize the agent within the coarse-estimation result attained in the former stage.
+    The third stage incorporates the finer-granularity location estimates based on measurements from 2.4 GHz with grid-level estimation into one final estimate.
 
     \begin{figure}[thpb]
         \centering
@@ -23,23 +38,9 @@
     The first problem is that as the carrier frequency increases path loss increases significantly, which limits the radio covarage and localization ability of the system in large environments.
     On the other hand, as the carrier frequency increases, the separation between two antennas, i.e.\ the anchor node and the target to be localized, can be identified with finer spatial resolution.
     Therefore, the trade-off between radio coverage and spatial localization resolution can be resolved by employing different frequencies in indoor localization systems by fusing the information acquired from the anchor nodes using different carrier frequencies.
-    Thus, \gls{mfms} employs a \gls{lora} (900 MHz), a WiFi \gls{ap} and a Bluetooth (2.4 GHz) beacon in each anchor node.
+    Thus, \gls{mfms} employs a radio module working at 900 MHz, and a radio module working at 2.4 GHz in each anchor node.
     \Cref{tab:specs} tabulates the specifications of the radios consisting in each anchor node, while \Cref{fig:module} demonstrates the details of the anchor nodes.
-    In other words, wider spatial coverage is achieved by using \gls{lora} modules working at 900 MHz while finer spatial resolution provided by WiFi and Bluetooth both working at 2.4 GHz frequency.
-
-    \begin{table}
-    \begin{center}
-    \caption{\label{tab:specs}The specifications of radios used in anchor nodes}
-      \begin{tabular}{@{}lccc@{}}\toprule[1.5pt]
-        Property                        &WiFi           &Bluetooth      &\gls{lora}\\ \midrule[1.5pt]
-        Frequency [MHz]:                &2400           &2400           &900 \\ \midrule
-        Communication Bandwidth:        &1-11 Mbps      &Upto 4 Mbps    &10 Kbps \\ \midrule
-        Transmission Power $P_t$ [dBm]: &17             &10             &24 \\ \midrule
-        Reciever Sensivity [dBm]:       &?              &-98            &-101 \\ \midrule
-        Communication Range [m]:        &$<$20          &$~$10            &$>$100  \\\bottomrule[1.5pt]
-      \end{tabular}
-    \end{center}
-    \end{table}
+    In other words, wider spatial coverage is achieved by using low-frequency radio modules working at 900 MHz while finer spatial resolution provided by high-frequency radio modules working at 2.4 GHz frequency band.
 
     \begin{figure}[thpb]
        \centering
@@ -47,15 +48,25 @@
        \caption{\label{fig:module}\gls{mfms} Anchor Nodes}
     \end{figure}
 
-    \subsection{Stage 1:Spatially-coherent Path Loss Exponent Estimation}
-    This section covers the details of the joint path loss exponent estimation which forms the first stage of \gls{mfms}.
-    \gls{mfms} approaches the \gls{firl} problem in the scope of curve fitting.
-    However, unlike many proposed approaches mentioned earlier, \gls{mfms} does not solely rely on the collected data to fit a function which best explains the training data given the location labels.
-    Moreover, \gls{mfms} does not consider the path loss exponent as a variable describing the whole localization environment.
-    Instead, we approach the problem by estimating a path loss exponent for different regions in the environment.
-    %  differing in value depending on the regions at which the agent resides.
-    In other words, the path loss exponent for \gls{mfms} is a function of the region at which the agent might reside.
-    Therefore, the proposed system is able to tackle multi-modal propagation caused by non-uniform distribution of obstructions in the environment.
+    \subsection{Stage 1: Grid-cell Level Localization }
+    This section covers the first stage of localization of the proposed method where the propagation of the radio waves is approximated in grid-level granularity and a special path loss exponent term is derived.
+      \subsubsection{Grid-level Localization}
+      During the online phase, \gls{mfms} first localizes the agent's vicinity with a grid-level accuracy by employing a softmax classifier which is depicted in \Cref{fig:softmax}.
+      The classifier assigns a probability of the agent might reside to each grid cell given the acquired fingerprints obtained from low-frequency radio module.
+      The reason \gls{mfms} solely employs low-frequency radio fingerprints in grid-level localization is that due to the higher probability of observing multiple modules in arbitrary positions in the environment, thanks to the smaller path loss they introduce.
+      During the online phase, the estimated spatially-coherent path loss exponent, a set of physical parameter defining the radio wave propagation, is incorporated into the location estimation process in Stage-II\@.
+
+
+      \subsubsection{Spatially-coherent Path Loss Exponent Estimation}
+        \gls{ldpl} model and its variants significantly suffers from dynamic environments and non-uniformly populated environments where some part of the environment is densely populated while other parts sparsely populated.
+        As can be seen in \Cref{eq:optimal-ple}, \gls{ldpl} model considers the environment as a whole while the path loss exponent, a scalar, is expected to approximate the propagation occurring\ldots
+        % However, unlike many proposed approaches mentioned earlier, \gls{mfms} does not solely rely on the collected data to fit a function which best explains the training data given the location labels.
+        \gls{mfms}, however, does not consider the environment as a whole.
+        % the path loss exponent is estimated in grid-level resolution.
+        Thus, we approach the problem by estimating a path loss exponent for different regions in the environment.
+        %  differing in value depending on the regions at which the agent resides.
+        In other words, the path loss exponent for \gls{mfms} is a function of the region at which the agent might reside.
+        Therefore, the proposed system is able to tackle multi-modal propagation caused by non-uniform distribution of obstructions in the environment.
 
     \begin{figure}[thpb]
        \centering
@@ -64,20 +75,18 @@
     \end{figure}
 
     Let $\Omega=\{g_\theta | \theta=1\ldots n_{grid}\}$ be the localization environment which is divided into $n_{grid}$ number of grid cells $g$.
-    Spatially-coherent path loss exponent $n^{*,i}_g$, which is the path loss exponent of anchor node $i$ in grid cell $g$, can be formulated in least square sense by using the \gls{ldpl} model.
+    Spatially-coherent path loss exponent $n^{*,i}_g$, which is the path loss exponent of anchor node $i$ in grid cell $g$, can be formulated in least square sense, similar to \gls{ldpl} model.
+
     \begin{equation}
-       n^{*,i}_g = \argmin_n{\sum_{j_g} \left(d^i_{j_g} - f_d(m^i_{j_g},n)\right)^2}
+       n^{*,i}_g = \argmin_n{\sum_{j_g} \left({d^i_{j_g} - f_d(m^i_{j_g},n)}\right)^2}
     \end{equation}
-    where $d^i_{j_g}$ and $m^i_{j_g}$ denote the radial distance between anchor node $i$ and the measurement location with in grid cell $g$, and the measurements acquired in grid cell $g$, while $f_d(\cdot)$ denotes the \gls{ldpl} model.
+    where $d^i_{j_g}$ and $m^i_{j_g}$ denote the radial distance between anchor node $i$ and the measurement location within grid cell $g$, and the measurements acquired in grid cell $g$, while $f_d(\cdot)$ denotes the \gls{ldpl} model.
     This estimation is conducted once during the offline phase from the collected fingerprints; while, during the online phase, the estimated spatially-coherent path loss exponents are chosen from $\bm{n}^{*,i} =\{n^{*,i}_g | g=1\ldots n_{grid}\}$ according to the belief of the agent resides in the grid cell $g$.
-    During the online phase, the selection of \gls{mfms} first localizes the agent's vicinity with a grid-level accuracy by employing a softmax classifier which is depicted in \Cref{fig:softmax}.
-    The classifier assigns a probability of the agent might reside to each grid cell given the acquired \gls{lora} measurements.
-    The reason \gls{mfms} solely employs \gls{lora} measurements in grid-level localization is that due to the higher probability of observing multiple \gls{lora} modules in arbitrary positions in the environment, thanks to the smallar path loss they introduce.
-    During online phase, the estimated spatially-coherent path loss exponent, a set of physical parameter defining the radio wave propagation, is incorporated into the location estimation process in Stage-II\@.
 
     % Because the spatially-coherent path loss exponent is a function of the grid cells, grid-level localization should be accomplished during online phase so that the proper spatially-coherent path loss exponent can be chosen.
     % The weights of each grid is learned with a softmax classifier, which is depicted in \Cref{fig:softmax}.
-
+      \subsubsection{Anchor Node Selection}
+      Based on the spatially-coherent path loss exponent, we can choose which anchor nodes are more useful and that.
 
     \subsection{Stage 2:Pinpoint Localization}
     This section gives details of the second stage of the \gls{mfms} which is the pinpoint localization.

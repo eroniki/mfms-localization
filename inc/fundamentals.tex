@@ -1,12 +1,22 @@
-\section{Radio Wave Propagation in Radiolocation}
+\section{Radio Wave Propagation in Radiolocation and Function Approximation}
 \label{sec:fundamentals}
-    This section will cover the fundamentals of radio wave propagation with regards to \gls{firl}.
+    This section will cover the fundamentals of radio wave propagation in the context of \gls{firl}.
     \Gls{firl}s consist of two main phases.
-    The first phase, offline phase,  involves the collection of measurements about the anchor nodes placed in the environment, along with the positions measurements are taken.
+    The first phase, i.e.\ offline phase, involves the collection of some types measurements from $n_{an}$ number \gls{an} placed in the environment.
+    The measurements and the corresponding positions where the measurements are taken form measurement space $\bm{M} \in \mathbb{R}^{n_{s} \text{ x } n_{a}}$ and localization space $\bm{X} \in \mathbb{R}^{n_{s} \text{ x } 3}$
+    % Let $\bm{\Omega} = \{g_i | i : 1\ldots n_g \}$ be the localization environment which is divided int $n_g$ number of grid cells $g_i$ and $\bm{x}_i = \{ x, y, \theta \} \in \mathbb{R}^3$ be the pose of the agent to be localized.
     Let $m^i_j \in \mathbb{Z}^1$ and $d^i_j \in \mathbb{R}^1$ be the measurement obtained from anchor node $i$ at  location $j$, and the radial distance between location $j$ and anchor node $i$, respectively.
     The measurement space $\bm{m}^i=\{m^i_j | j=1 \ldots n_{loc}\} \in \mathbb{R}^{n_{loc}}$ is often constructed in either frequency domain [refer CSI], or time domain.
     % The collected measurements are used to approximate the propagation function for each anchor node.
     The measurements are then used to approximate the propagation function $f^i_d:\mathbb{Z}^1\mapsto\mathbb{R}^1$ of anchor node $i$.
+    \Cref{fig:omega} illustrates the localization environment and the robot pose etc.
+
+    The fundamental problem of radiolocation systems can be seen as an function approximation problem where $\hat{f}: \bm{M} \mapsto \bm{X}$ the approximated propagation function is used to project fingerprints to estimated positions, or even pose.
+
+    % \subsection{Supervised Propagation Modelling}
+    %     Supervised learning
+    %
+    % \subsection{Empirical Propagation Modelling}
 
     \begin{equation}
         f^i_d(m^i_j)=d^i_j
@@ -63,10 +73,10 @@
         n =
         \begin{cases}
             <2,& \parbox[t]{.6\textwidth}{if the space structure guides the radio waves\\
-                                        along the propagation path}, \\
-            =2,& \text{if the space is empty}, \\
+                                        along the propagation path,} \\
+            =2,& \text{if the space is empty,} \\
             >2,& \parbox[t]{.6\textwidth}{if there are obstructions along the propagation\\
-                                        path}
+                                        path.}
         \end{cases}
     \end{equation}
 
@@ -91,6 +101,7 @@
     %  $\sum_j |d^i_j - \hat{f}^i_d(m^i_j, n^*)|$ where  $j = 1 \ldots n_{loc}$.
 
     \begin{equation}
+      \label{eq:optimal-ple}
       n^*_i = \argmin_n \sum_j |d^i_j - f^i_d(m^i_j, n)|
     \end{equation}
 

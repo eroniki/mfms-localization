@@ -1,5 +1,5 @@
 \section{Experimentation}
-
+\label{sec:experimentation}
     \subsection{Experimental Setup}
     This section will lay out the outline of the experimantation conducted.
     The experimentations are conducted on two different environments depicted on \Cref{fig:environment}.
@@ -18,7 +18,19 @@
     Each anchor node contains an XBee, referred as \gls{lora} working at 900 MHz, and a ESP32 containing a WiFi access point and a Bluetooth working at 2.4 GHz.
     \Cref{tab:specs} lays out the details of the individual module specification in detail.
     The mobile agent is equipped with an ESP32 and a low-cost Bluetooth module based on CSR8510 chipset.
-
+    \begin{table}
+    \begin{center}
+    \caption{\label{tab:specs}The specifications of radios used in each anchor node}
+      \begin{tabular}{@{}lcc@{}}\toprule[1.5pt]
+        Property                        &2.4 GHz        &900 MHz\\ \midrule[1.5pt]
+        Frequency [MHz]:                &2400           &900 \\ \midrule
+        Communication Bandwidth:        &1-11 Mbps      &10 Kbps \\ \midrule
+        Transmission Power $P_t$ [dBm]: &17             &24 \\ \midrule
+        Reciever Sensivity [dBm]:       &?              &-101 \\ \midrule
+        Communication Range [m]:        &$<$20          &$>$100  \\\bottomrule[1.5pt]
+      \end{tabular}
+    \end{center}
+    \end{table}
     \subsubsection{Software}
     \gls{lora}, WiFi, and Bluetooth measurements are collected with the module placed on the mobile agent, and transmitted to onboard computer via Serial communication protocol.
     The synchronization of the radios along with the parsing of the serial packets are implemented with ROS~\cite{quigley2009ros}.

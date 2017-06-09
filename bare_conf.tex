@@ -183,12 +183,12 @@ Email: tomonari@vt.edu
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-    This paper presents a multifrequency and multistage indoor robot localization system based on fingerprinting.
-    The proposed system relies on a 900 MHz \gls{lora} along with 2.4 GHz \gls{wifi} and \gls{bt} networks.
-    By exploiting different propagation characteristics of different \gls{rf} signal wave within a \gls{gru} framework, \gls{rss} measurements are used for indoor localization purposes.
+    This paper presents a multifrequency and multistage indoor fingerprinting-based radiolocation system.
+    The proposed system relies on a 900 MHz and with 2.4 GHz radios based on 802.15.4 protocol.
+    By exploiting different propagation characteristics of different \gls{rf} signal wave within a \gls{gru} framework, \gls{rss} and \gls{rtt} measurements are used for indoor localization purposes.
     % where a Deep Learning framework utilized to fully exploit the information from signal maps of various Access Points (AP) available in an environment.
     Similar to conventional fingerprinting systems, the system is consisted of two phases: data acquisition and learning (offline), and localization (online).
-    In offline phase, the signal maps for various AP's are constructed via \gls{rss} information and path loss exponent is learned by a network consisted of \gls{gru}, whereas the online phase contains an information fusion based localization method.
+    In offline phase, the propagation function for each \gls{an} and path loss exponent is learned by a recurrent network consisted of \gls{gru} from \gls{rss} and \gls{rtt} measurements, whereas the online phase contains different stages of localization and an information fusion stage.
     \textit{Add some result once get it}
 \end{abstract}
 
@@ -204,29 +204,34 @@ Email: tomonari@vt.edu
 \glsresetall{}
 
 \input{inc/intro.tex}
-\input{inc/fundamentals.tex}
-\begin{figure*}[!ptbhp]
-    \centering
-    \begin{subfigure}[t]{0.45\linewidth}
-        \includegraphics[width=\columnwidth]{figures/placeholder.png}
-        \caption{Floor map of the first environment used in the experimentations}\label{fig:randolph}
-    \end{subfigure}
-    \begin{subfigure}[t]{0.45\linewidth}
-        \includegraphics[width=\columnwidth]{figures/placeholder.png}
-        \caption{Floor map of the first environment used in the }\label{fig:goodwin}
-        \end{subfigure}
-    \caption{The floor maps of the environments was conducted\label{fig:environment}}
-\end{figure*}
-\input{inc/mfms.tex}
-\input{inc/experimentation.tex}
 \begin{figure*}[!pht]
-  %    \begin{subfigure}[b]{\linewidth}
   \centering
-  \includegraphics[width=\linewidth]{figures/mfms.eps}
-  \caption{\label{fig:mfms-model}\gls{mfms} Model}
-  %   \end{subfigure}
+  \includegraphics[width=\linewidth]{figures/omega.png}
+  \caption{\label{fig:omega} Localization Environment}
 \end{figure*}
-\label{sec:experimentation}
+
+\input{inc/fundamentals.tex}
+
+\pagebreak
+
+\input{inc/mfms.tex}
+
+\input{inc/experimentation.tex}
+
+\begin{figure*}[!ptbhp]
+  \centering
+  \begin{subfigure}[t]{0.45\linewidth}
+    \includegraphics[width=\columnwidth]{figures/placeholder.png}
+    \caption{Floor map of the first environment used in the experimentations}\label{fig:randolph}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.45\linewidth}
+    \includegraphics[width=\columnwidth]{figures/placeholder.png}
+    \caption{Floor map of the first environment used in the }\label{fig:goodwin}
+  \end{subfigure}
+  \caption{The floor maps of the environments was conducted\label{fig:environment}}
+\end{figure*}
+
+
 \input{inc/conclusion.tex}
 
 \input{inc/acknowledgment.tex}
